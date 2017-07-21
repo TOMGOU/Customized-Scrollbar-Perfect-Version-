@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin: 0;padding: 0;}
+	        body{
+	        	-webkit-user-select:none;
+	        	-moz-user-select:none;
+	        	user-select:none;
+	        	-o-user-select:none;
+	        }
+	        #content{
+	        	position: absolute;
+	        	top: 0px;
+	        	width: 100%;
+	        	padding: 20px;
+	        	background: #FCF3B4;
+	        	border-radius: 10px;
+	        }
+	        #content h2{
+	        	width: 100%;
+	        	font-size: 30px;
+	        	font-weight: bold;
+	        	text-align: center;
+	        }
+	        #content p{
+	        	font-size: 24px;
+	        	font-weight: bold;
+	        	font-family: "KaiTi";
+	        	color: #000;
+	        }
+	        #content p.pbold{
+	        	font-size: 20px;
+	        	font-weight: bold;
+	        	font-family: "Verdana";
+	        	color: #EF41B7;
+	        }
+	        #wrap{
+	        	position: relative;
+	        	width: 620px;
+	        	height: 580px;
+	        	overflow: hidden;
+	        	margin: 10px auto;
+	        	border-radius: 10px;
+	        	box-shadow: 0 0 20px 2px #666;
+	        }
+	        #scrollBox{
+	        	position: absolute;
+	        	display: none;
+	        	right: 0px;
+	        	width: 32px;
+	        	height: 580px;
+	        	background: linear-gradient(to bottom,#52C5FC 10%,yellow 50%,#E78EFD 90%);;
+	        	border-radius: 20px;
+	        	border: 1px dotted red;
+	        	z-index: 999;
+	        }
+	        #scrollBar{
+	        	position: absolute;
+	        	width: 30px;
+	        	height: 100px;
+	        	background: repeating-radial-gradient(circle,green 30%, rgba(250,250,250,0.1) 50%, red 70%);
+	        	box-shadow: 0 0 10px 0 inset;
+	        	border-radius: 20px;
+	        	border: 1px solid red;
+	        }
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="scrollBox">
+				<div id="scrollBar">
+					
+				</div>
+			</div>
+			<div id="content">
+				
+	          <h2>生与死</h2>
+		        　　<p class="pbold"> I strove with none for none was worth my strife; </p>
+		        　　<p>我和谁都不争，和谁争我都不屑；</p>
+		        　　<p class="pbold">Nature I loved, and, next to nature, art; </p>
+		        　　<p>我热爱大自然，其次是艺术；</p>
+		        　　<p class="pbold">I warm'd both hands before the fire of life; </p>
+		        　　<p> 我用生命之火温暖双手；</p>
+		        　　<p class="pbold">It sinks, and I am ready to depart.</p>
+		        　　<p>火萎了，我也该离开了。</p>
+		        
+		      <h2>生与死</h2>
+		        　　<p class="pbold"> I strove with none for none was worth my strife; </p>
+		        　　<p>我和谁都不争，和谁争我都不屑；</p>
+		        　　<p class="pbold">Nature I loved, and, next to nature, art; </p>
+		        　　<p>我热爱大自然，其次是艺术；</p>
+		        　　<p class="pbold">I warm'd both hands before the fire of life; </p>
+		        　　<p> 我用生命之火温暖双手；</p>
+		        　　<p class="pbold">It sinks, and I am ready to depart.</p>
+		        　　<p>火萎了，我也该离开了。</p>
+		        
+		      <h2>生与死</h2>
+		        　　<p class="pbold"> I strove with none for none was worth my strife; </p>
+		        　　<p>我和谁都不争，和谁争我都不屑；</p>
+		        　　<p class="pbold">Nature I loved, and, next to nature, art; </p>
+		        　　<p>我热爱大自然，其次是艺术；</p>
+		        　　<p class="pbold">I warm'd both hands before the fire of life; </p>
+		        　　<p> 我用生命之火温暖双手；</p>
+		        　　<p class="pbold">It sinks, and I am ready to depart.</p>
+		        　　<p>火萎了，我也该离开了。</p>
+		        　　
+	        </div>
+        </div>
+        <script>
+        	var wrap = document.getElementById("wrap");
+        	var scrollBar = document.getElementById("scrollBar");
+        	var scrollBox = document.getElementById("scrollBox");
+        	var con = document.getElementById("content");
+        	var flag = true;
+        	var mark = false;
+        	
+        	scrollBar.onmousedown = function(ev){
+        		var e = ev || window.event;
+        		var by = position(ev).Y;
+        		var cTop = parseInt(getCurrent(scrollBar,"top")||0);
+        		var maxTop = scrollBox.offsetHeight - this.offsetHeight;
+        		flag = false;
+        		mark = false;
+        		document.onmousemove = function(ev){
+        			var e = ev || window.event;
+	        		var ay = position(ev).Y;
+	        		var y = ay - by + cTop;
+	        		if(y <= 0){
+	        			y = 0;
+	        		}
+	        		if(y >= maxTop){
+	        			y = maxTop;
+	        		}
+	        		scrollBar.style.top = y + 'px';
+	        		var per = (con.offsetHeight-580)*y/maxTop;
+	        		con.style.top = -per + 'px';
+	        		
+        		}
+        		document.onmouseup = function(){
+        			document.onmousemove = null;
+        			flag = true;
+        			if(mark){
+	        			scrollBox.style.display = "none";
+	        		}
+        		
+        		}
+        	}
+        	//获取css属性值
+        	function getCurrent(dom,att){
+        		return dom.currentStyle?dom.currentStyle[att]:getComputedStyle(dom)[att];
+        	}
+        	//获取页面坐标
+        	function position(ev){
+        		var e = ev || window.event,x,y,sTop,sLeft;
+        		if(e.pageX){
+        			x = e.pageX;
+        			y = e.pageY;
+        		}else{
+        			sTop = document.documentElement.scrollTop;
+        			sLeft = document.documentElement.scrollLeft;
+        			x = e.clientX + sLeft;
+        			y = e.clientY + sTop;
+        		}
+        		return {
+        			"X": x,
+        			"Y": y
+        		}
+        	}
+        	//移入显示滚动条
+        	wrap.onmouseenter = function(){
+        		scrollBox.style.display = "block";
+        	}
+        	//移除隐藏滚动条
+        	wrap.onmouseleave = function(){
+        		mark = true;
+        		if(flag){
+        			scrollBox.style.display = "none";
+        		}
+        		
+        	}
+        	//鼠标滚轮滚动控制
+        	document.onmousewheel !== undefined?document.onmousewheel = fn:document.addEventListener("DOMMouseScroll",fn,false);
+        	function fn(ev){
+        		var e = ev || window.event;
+        		var num = -e.detail || e.wheelDelta;
+        		var maxTop = scrollBox.offsetHeight - scrollBar.offsetHeight;
+        		var cTop = parseInt(getCurrent(scrollBar,"top")||0);
+        		var y = cTop;
+        		num<0?y+=-20:y+=20;
+    			if(y <= 0){
+        			y = 0;
+        		}
+        		if(y >= maxTop){
+        			y = maxTop;
+        		}
+        		scrollBar.style.top = y + 'px';
+        		var per = (con.offsetHeight-580)*y/maxTop;
+        		con.style.top = -per + 'px';
+        	}
+        	//scrollBox点击事件
+        	scrollBox.onclick = function(ev){
+        		var e = ev || window.event;
+        		y=position(ev).Y -10 -scrollBar.offsetHeight/2;
+        		var maxTop = scrollBox.offsetHeight - scrollBar.offsetHeight;
+        		if(y <= 0){
+        			y = 0;
+        		}
+        		if(y >= maxTop){
+        			y = maxTop;
+        		}
+        		scrollBar.style.top = y + 'px';
+        		var per = (con.offsetHeight-580)*y/maxTop;
+        		con.style.top = -per + 'px';
+        	}
+        	//scrollBar高度设置
+        	var scrollBoxHeight = scrollBox.clientHeight;
+        	var contentHeight = content.scrollHeight;
+        	//alert(scrollBoxHeight);
+        	//scrollBar.style.height = scrollBoxHeight*scrollBoxHeight/contentHeight + "px";
+        </script>
+	</body>
+</html>
